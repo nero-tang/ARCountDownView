@@ -13,6 +13,7 @@
 		8CB495A81AF2ED7F002F46F4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CB495A71AF2ED7F002F46F4 /* Images.xcassets */; };
 		8CB495AB1AF2ED7F002F46F4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CB495A91AF2ED7F002F46F4 /* LaunchScreen.xib */; };
 		8CB495B71AF2ED7F002F46F4 /* ARCountDownViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB495B61AF2ED7F002F46F4 /* ARCountDownViewTests.swift */; };
+		8CB495C11AF2EEC9002F46F4 /* ARCountDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB495C01AF2EEC9002F46F4 /* ARCountDownView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		8CB495B01AF2ED7F002F46F4 /* ARCountDownViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARCountDownViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CB495B51AF2ED7F002F46F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CB495B61AF2ED7F002F46F4 /* ARCountDownViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCountDownViewTests.swift; sourceTree = "<group>"; };
+		8CB495C01AF2EEC9002F46F4 /* ARCountDownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARCountDownView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				8CB495A71AF2ED7F002F46F4 /* Images.xcassets */,
 				8CB495A91AF2ED7F002F46F4 /* LaunchScreen.xib */,
 				8CB4959E1AF2ED7F002F46F4 /* Supporting Files */,
+				8CB495C01AF2EEC9002F46F4 /* ARCountDownView.swift */,
 			);
 			path = ARCountDownView;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CB495C11AF2EEC9002F46F4 /* ARCountDownView.swift in Sources */,
 				8CB495A31AF2ED7F002F46F4 /* ViewController.swift in Sources */,
 				8CB495A11AF2ED7F002F46F4 /* AppDelegate.swift in Sources */,
 			);
@@ -341,6 +345,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ARCountDownView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -351,6 +356,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ARCountDownView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

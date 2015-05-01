@@ -8,11 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ARCountDownViewDelegate {
 
+    @IBOutlet weak var countdownView: ARCountDownView!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        countdownView.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,6 +22,22 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func startCountDown(sender: AnyObject) {
+        countdownView.startAnimation()
+    }
+    
+    @IBAction func pauseCountDown(sender: AnyObject) {
+        countdownView.pauseAnimation()
+    }
+    
+    
+    
+    func countDownView(countDownView: ARCountDownView, secondElapsed second: UInt, didFinish flag: Bool) {
+        println("Second elapsed: \(second)s. Countdown finished: \(flag)")
+        if flag {
+            UIAlertView(title: "Alert", message: "Countdown finishes!", delegate: nil, cancelButtonTitle: "OK").show()
+        }
+    }
 
 }
 
