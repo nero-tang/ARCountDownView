@@ -15,6 +15,7 @@ class ViewController: UIViewController, ARCountDownViewDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         countdownView.delegate = self
+        countdownView.duration = 30
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,7 +33,7 @@ class ViewController: UIViewController, ARCountDownViewDelegate {
     
     
     
-    func countDownView(countDownView: ARCountDownView, secondElapsed second: UInt, didFinish flag: Bool) {
+    func countDownView(countDownView: ARCountDownView, timeElapsed second: UInt, didFinish flag: Bool) {
         println("Second elapsed: \(second)s. Countdown finished: \(flag)")
         if flag {
             UIAlertView(title: "Alert", message: "Countdown finishes!", delegate: nil, cancelButtonTitle: "OK").show()

@@ -20,8 +20,9 @@ protocol ARCountDownViewDelegate: class {
     
     :param: countDownView countDownView
     :param: second        total second elapsed since start
+    :param: flag          Did finish flag
     */
-    func countDownView(countDownView: ARCountDownView, secondElapsed second: UInt, didFinish flag: Bool)
+    func countDownView(countDownView: ARCountDownView, timeElapsed second: UInt, didFinish flag: Bool)
 }
 
 
@@ -34,7 +35,7 @@ class ARCountDownView: UIView {
     var duration: UInt! {
         didSet {
             textLabel.text = String(duration)
-            //contentLayer.strokeStart = 0.05 / CGFloat(duration)
+            contentLayer.strokeStart = 0.05 / CGFloat(duration)
             contentLayer.lineDashPattern = lineDashPattern
         }
     }
@@ -107,7 +108,7 @@ class ARCountDownView: UIView {
             /**
             *  Reset time elapsed, in second
             */
-            timeElapsed = 0
+            timerCount = 0
             
             /**
             *  Remove all previous animations
@@ -117,7 +118,7 @@ class ARCountDownView: UIView {
             /**
             *  Renew timer, update progress every second
             */
-            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "onSecondPassed", userInfo: nil, repeats: true)
+            timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "onHalfSecPassed", userInfo: nil, repeats: true)
             
             /**
             *  Reset central text
@@ -127,7 +128,7 @@ class ARCountDownView: UIView {
             /**
             *  Start animation
             */
-            updateCountDownAnimation()
+            //updateCountDownAnimation()
             
             /**
             *  Reset flags
@@ -148,17 +149,16 @@ class ARCountDownView: UIView {
     
     
     /**
-    *  Callback functions of timer, every second
+    *  Callback functions of timer, every 0.5 second
     */
-    func onSecondPassed() {
+    func onHalfSecPassed() {
         if started && counting {
-            started = ++timeElapsed < duration
-            delegate?.countDownView(self, secondElapsed: timeElapsed, didFinish: !started)
+            started = ++timerCount < 2 * duration
             if !started {
                 timer.invalidate()
                 timer = nil
                 counting = false
-            } else {
+            } else if timerCount % 2 == 1{
                 updateCountDownAnimation()
             }
         }
@@ -171,10 +171,10 @@ class ARCountDownView: UIView {
     func updateCountDownAnimation() {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.delegate = self
-        animation.duration = 0.9
+        animation.duration = 0.5
         animation.fromValue = contentLayer.presentationLayer().strokeEnd
         animation.toValue = contentLayer.presentationLayer().strokeEnd - 1.0 / CGFloat(duration)
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
         animation.removedOnCompletion = false
         animation.fillMode = kCAFillModeForwards
         contentLayer.addAnimation(animation, forKey: animation.keyPath)
@@ -197,7 +197,7 @@ class ARCountDownView: UIView {
         /*
         *  Update the layout of content layer
         */
-        contentLayer.path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: CGFloat(-M_PI_2), endAngle: CGFloat(M_PI_2 * 3), clockwise: true).CGPath
+        contentLayer.path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: startAngle, endAngle: startAngle + 2 * CGFloat(M_PI), clockwise: true).CGPath
         contentLayer.lineWidth = lineWidth
         contentLayer.lineDashPattern = lineDashPattern
     }
@@ -206,7 +206,11 @@ class ARCountDownView: UIView {
     
     
     override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
-        textLabel.text = String(duration - timeElapsed - 1)
+        let timeElapsed: UInt = timerCount / 2
+        let timeRemaining: UInt = duration - timeElapsed
+        
+        textLabel.text = String(timeRemaining)
+        delegate?.countDownView(self, timeElapsed: timeElapsed, didFinish: !started)
     }
     
     
@@ -234,7 +238,7 @@ class ARCountDownView: UIView {
     
     private var started: Bool = false
     
-    private var timeElapsed: UInt = 0
+    private var startAngle: CGFloat = -CGFloat(M_PI_2)
     
     private var textLabel = UILabel()
     
@@ -243,6 +247,7 @@ class ARCountDownView: UIView {
     }
     
     private var timer: NSTimer!
+    private var timerCount: UInt = 0
     
     /**
     Override default layer class to CAShapeLayer
